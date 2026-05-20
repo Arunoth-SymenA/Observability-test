@@ -1,4 +1,12 @@
-const express = require('express');
+require('dotenv').config();
+
+/* __DEVOPSARK_OBSERVABILITY_PATCHED__ */
+async function main() {
+  const logger = require('./Devopsark-4f95872fbb59/logger.js');
+  const metricsMiddleware = require('./Devopsark-4f95872fbb59/metricsMiddleware.js');
+  await logger.whenReady();
+  const express = require('express');
+
 const axios = require('axios');
 
 const app = express();
@@ -116,4 +124,10 @@ app.listen(PORT, () => {
   console.log(`  - http://localhost:${PORT}/fail`);
   console.log(`  - http://localhost:${PORT}/anomaly`);
   console.log(`==================================================`);
+});
+}
+
+main().catch((err) => {
+  console.error('Failed to start:', err.message || err);
+  process.exit(1);
 });
